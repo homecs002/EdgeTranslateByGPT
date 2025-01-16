@@ -1,0 +1,28 @@
+{
+    "manifest_version": 3,
+    "name": "划词翻译 - 通义千问",
+    "version": "1.0",
+    "description": "在网页上划词翻译，使用通义千问 API。",
+    "permissions": ["activeTab", "contextMenus", "storage", "scripting"],
+    "host_permissions": ["<all_urls>"],
+    "background": {
+      "service_worker": "background.js"
+    },
+    "content_scripts": [
+      {
+        "matches": ["<all_urls>"],
+        "js": ["content.js"],
+        "run_at": "document_end"
+      }
+    ],
+    "action": {
+      "default_popup": "popup.html"
+    },
+    "commands": {
+      "_execute_action": {
+        "suggested_key": {
+          "default": "Ctrl+Shift+Y"
+        }
+      }
+    }
+}
