@@ -110,7 +110,7 @@ function showTranslation(translation) {
   const rect = range.getBoundingClientRect();
 
   const div = document.createElement('div');
-  div.textContent = translation;
+  div.id = 'translation-popup';
   div.style.position = 'fixed';
   div.style.backgroundColor = 'rgba(0,0,0,0.8)';
   div.style.color = 'white';
@@ -118,7 +118,27 @@ function showTranslation(translation) {
   div.style.borderRadius = '5px';
   div.style.top = `${rect.bottom + window.scrollY}px`;
   div.style.left = `${rect.right + window.scrollX}px`;
+
+  const closeButton = document.createElement('button');
+  closeButton.textContent = '关闭';
+  closeButton.style.marginLeft = '10px';
+  closeButton.onclick = () => div.remove();
+
+  const content = document.createElement('div');
+  content.textContent = translation;
+
+  div.appendChild(content);
+  div.appendChild(closeButton);
   document.body.appendChild(div);
 
-  setTimeout(() => div.remove(), 5000);
+  document.addEventListener('click', removePopup);
+}
+
+// 移除翻译结果浮窗
+function removePopup() {
+  const div = document.getElementById('translation-popup');
+  if (div) {
+    div.remove();
+    document.removeEventListener('click', removePopup);
+  }
 }
